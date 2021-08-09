@@ -1,0 +1,6 @@
+create a qr code of the base 64 
+the user can print the image into a paper
+keep the paper inside a locker
+
+we create an app that will decrypt the qr into the data
+
