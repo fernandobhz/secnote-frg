@@ -14,3 +14,9 @@
   * encrypt and decrypt 
   * qr code generation
   * end of the world backup app: a small self content html-page/ wich can decrypt, must fit in a qr-code
+
+# DevOps / Tooling ???
+  * github
+  * jira/bitbucket
+  * gitlab
+  * azure devops  
