@@ -78,3 +78,44 @@
  - Frontend (Fernando, Ian)
  - Ui Ux (???)
  - Css guy (???)
+
+
+# Sprints - 1 month each
+  # First
+    express-generator ejs app
+    form 1: receive data, and password from a html post and reply the encrypted text
+    form 2: receive encrypted data and password and return decrypted text
+    no css
+    no react
+    no storage
+    no devops
+
+    deploy to heroku from command line
+
+    the most common and bigger error that teams do is to not go directy into the point we build the car with the car running
+
+  # Second 
+    login, sign up, logout, recover password, facebook login, google login, 2FA ( Amazon Cognito )
+  # Third
+    terraform deploying from command line
+    no devops yet
+    integrate login with express js app
+  # Fourth
+    storage in dynamodb
+    limit to up to 100 notes (keep in mind to not have the 100 limit harded coded in codebase)
+  # Fifth
+    html page/js with data decryption
+    send email with encrypted data and the html/js page
+  # Sixth
+    Css
+
+  # MVP MVP MVP
+
+  # Seventh
+
+  # Eighth
+
+  # Nineth
+
+  # Tenth
+
