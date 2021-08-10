@@ -1,3 +1,5 @@
+ask again about DoR and DoD and groom.
+
 # Provisory name: SecNote
 # Objectives
   * Practice
