@@ -85,7 +85,7 @@
   # Zero sprints
     - Write the story down
     - Planning poker them
-    - Gromm them
+    - Grom them
     - Write the DoR, DoD
     - Make a schedule (planning, retro, review)
 
