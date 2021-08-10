@@ -81,6 +81,14 @@
 
 
 # Sprints - 1 month each
+
+  # Zero sprints
+    - Write the story down
+    - Planning poker them
+    - Gromm them
+    - Write the DoR, DoD
+    - Make a schedule (planning, retro, review)
+
   # First
     express-generator ejs app
     form 1: receive data, and password from a html post and reply the encrypted text
