@@ -1,4 +1,11 @@
-ask again about DoR and DoD and groom.
+# Description
+
+Target audience: developers and tech savvy people looking for a secure, transparent, and easy to use platform to keep their notes, passwords, and any form of text secure and non-dependent on an internet connection at any given time.
+
+A website/app that will allow users to write down or upload files with a secure, back-tested, and a unique way to access them via QR code and a personal password to unlock it.
+
+As a developer, I want to be able to keep notes, passwords, and important files safe and have unique access to them even when I do not have an internet connection, so I don't have to rely on pseudo safe environments that only encrypt small amounts of data, that are server-dependent, to which I am locked out in case I have no internet connection of any kind.
+
 
 # Provisory name: SecNote
 # Objectives
