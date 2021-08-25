@@ -94,7 +94,7 @@ As a developer, I want to be able to keep notes, passwords, and important files 
   # Zero sprints
     - Write the story down
     - Planning poker them
-    - Grom them
+    - Groom them
     - Write the DoR, DoD
     - Make a schedule (planning, retro, review)
 
