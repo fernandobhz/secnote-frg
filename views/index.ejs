@@ -2,15 +2,57 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js"
+      integrity="sha512-lTLt+W7MrmDfKam+r3D2LURu0F47a3QaW5nF0c6Hl0JDZ57ruei+ovbg7BrZ+0bjVJ5YgzsAWE+RreERbpPE1g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      async function encrypt() {
+        const decrypted = window.decrypted.value;
+        const password = window.password.value;
+
+        const { data: encrypted } = await axios.post(`/api/encrypt`, { decrypted, password });
+        window.encrypted.innerHTML = encrypted;
+        window.decrypted.innerHTML = "";
+      }
+
+      async function decrypt() {
+        const encrypted = window.encrypted.value;
+        const password = window.password.value;
+
+        const { data: decrypted } = await axios.post(`/api/decrypt`, { encrypted, password });
+        window.decrypted.innerHTML = decrypted;
+        window.encrypted.innerHTML = "";
+      }
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
 
-    <a href="/encrypt-data" target="_blank">encrypt-data</a><br>
+    <div>
+      Password: <input type="password" id="password" value="12345678" />
+    </div>
+    
     <br>
-    <a href="/decrypt-data" target="_blank">decrypt-data</a><br>
-    <br>
+
+    <div style="display: flex; justify-content: space-between;">
+      <div style="flex-grow: 10;">
+        <div style="text-align: center">Encrypt</div>
+        <textarea id="decrypted" style="width: 100%; height: 200px">SecNote</textarea>
+        <div style="text-align: right"><button onclick="encrypt()">Encrypt</button></div>
+      </div>
+
+      <div style="flex-grow: 2;"></div>
+
+      <div style="flex-grow: 10;">
+        <div style="text-align: center">Decrypt</div>
+        <textarea id="encrypted" style="width: 100%; height: 200px"></textarea>
+        <div style="text-align: right"><button onclick="decrypt()">Decrypt</button></div>
+      </div>
+    </div>
   </body>
 </html>
