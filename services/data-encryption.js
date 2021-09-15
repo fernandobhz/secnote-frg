@@ -7,8 +7,8 @@ const {
 const { Buffer } = require('buffer');
 
 exports.encrypt = (text, password) => {
-  const algorithm = 'aes-192-cbc';
-  const key = scryptSync(password, `salt`, 24);
+  const algorithm = 'aes-256-cbc';
+  const key = scryptSync(password, `salt`, 32);
   const ivBuff = randomBytes(16);
   const cipher = createCipheriv(algorithm, key, ivBuff);
   const encrypted = cipher.update(text, `utf8`, `hex`) + cipher.final(`hex`);
@@ -24,8 +24,8 @@ exports.decrypt = (encryptedIv, password) => {
   const { encrypted, iv } = JSON.parse(Buffer.from(encryptedIv, `base64`).toString(`utf8`));
   console.log(`Decrypting... Encrypted, iv: `, encrypted, iv);
   
-  const algorithm = 'aes-192-cbc';
-  const key = scryptSync(password, `salt`, 24);
+  const algorithm = 'aes-256-cbc';
+  const key = scryptSync(password, `salt`, 32);
   const ivBuff = Buffer.from(iv, `hex`); 
   const decipher = createDecipheriv(algorithm, key, ivBuff);
   const decrypted = decipher.update(encrypted, `hex`, `utf8`) + decipher.final(`utf8`);
