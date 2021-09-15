@@ -1,49 +1,34 @@
 const {
-  scrypt,
   scryptSync,
-  randomFill,
+  randomBytes,
   createCipheriv,
   createDecipheriv,
 } = require('crypto');
 const { Buffer } = require('buffer');
 
-exports.encrypt = (text, password, callback) => {
+exports.encrypt = (text, password) => {
   const algorithm = 'aes-192-cbc';
-  scrypt(password, 'salt', 24, (err, key) => {
-    if (err) throw err;
-    randomFill(new Uint8Array(16), (err, iv) => {
-      if (err) throw err;
+  const key = scryptSync(password, `salt`, 24);
+  const ivBuff = randomBytes(16);
+  const cipher = createCipheriv(algorithm, key, ivBuff);
+  const encrypted = cipher.update(text, `utf8`, `hex`) + cipher.final(`hex`);
+  const iv = ivBuff.toString(`hex`);
+  
+  const encryptedIv = Buffer.from(JSON.stringify({ encrypted, iv}), `utf8`).toString(`base64`);
 
-      const cipher = createCipheriv(algorithm, key, iv);
-
-      let encrypted = '';
-      cipher.setEncoding('hex');
-
-      cipher.on('data', (chunk) => (encrypted += chunk));
-      cipher.on('end', () => callback(encrypted, iv));
-
-      cipher.write(text);
-      cipher.end();
-    });
-  });
+  console.log(`Encrypting... Encrypted, iv: `, encrypted, iv);
+  return encryptedIv;
 };
 
-exports.decrypt = (encrypted, password, iv, callback) => {
+exports.decrypt = (encryptedIv, password) => {
+  const { encrypted, iv } = JSON.parse(Buffer.from(encryptedIv, `base64`).toString(`utf8`));
+  console.log(`Decrypting... Encrypted, iv: `, encrypted, iv);
+  
   const algorithm = 'aes-192-cbc';
+  const key = scryptSync(password, `salt`, 24);
+  const ivBuff = Buffer.from(iv, `hex`); 
+  const decipher = createDecipheriv(algorithm, key, ivBuff);
+  const decrypted = decipher.update(encrypted, `hex`, `utf8`) + decipher.final(`utf8`);
 
-  const key = scryptSync(password, 'salt', 24);
-  const decipher = createDecipheriv(algorithm, key, iv);
-
-  let decrypted = '';
-  decipher.on('readable', () => {
-    while (null !== (chunk = decipher.read())) {
-      decrypted += chunk.toString('utf8');
-    }
-  });
-  decipher.on('end', () => {
-    callback(decrypted);
-  });
-
-  decipher.write(encrypted, 'hex');
-  decipher.end();
+  return decrypted;
 };

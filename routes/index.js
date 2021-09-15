@@ -1,32 +1,38 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { encrypt, decrypt } = require('../services/data-encryption');
+const { encrypt, decrypt } = require("../services/data-encryption");
 
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'SecNote' });
+router.get("/", function (req, res, next) {
+  res.render("index", { title: "SecNote" });
 });
 
-router.get('/encrypt-data', (req, res) => res.render('encrypt-data-get'));
+router.get("/encrypt-data", (req, res) => res.render("encrypt-data-get"));
 
-router.post('/encrypt-data', (req, res) => {
+router.post("/encrypt-data", (req, res) => {
   const { text, password } = req.body;
 
-  encrypt(password, text, (encrypted, iv) => {
-    console.log(iv.constructor.name)
-    const encryptedIv = JSON.stringify({encrypted, iv});
-    res.render('encrypt-data-post', { text, password, encrypted, iv, encryptedIv });
+  // todo: transform this function into an async one
+  const encrypted = encrypt(text, password);
+
+  console.log(`encrypting`, { encrypted });
+
+  res.render("encrypt-data-post", {
+    text,
+    password,
+    encrypted,
   });
 });
 
-router.get('/decrypt-data', (req, res) => res.render('decrypt-data-get'));
+router.get("/decrypt-data", (req, res) => res.render("decrypt-data-get"));
 
-router.post('/decrypt-data', (req, res) => {
-  const { encryptedIv, password } = req.body;
-  const { encrypted, iv } = JSON.parse(encryptedIv)
+router.post("/decrypt-data", (req, res) => {
+  const { encrypted, password } = req.body;
 
-  decrypt(encrypted, password, Array.from(iv), (text) => {
-    res.render('decrypt-data-post', { encrypted, password, text });
-  });
+  console.log(`decrypting`, { encrypted });
+
+  const text = decrypt(encrypted, password);
+
+  res.render("decrypt-data-post", { encrypted, password, text });
 });
 
 module.exports = router;
