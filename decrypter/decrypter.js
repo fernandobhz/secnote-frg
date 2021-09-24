@@ -10,5 +10,6 @@ decrypt = (encryptedIv, password) => {
   const decrypted = decipher.update(encrypted, `hex`, `utf8`) + decipher.final(`utf8`);
   return decrypted;
 };
+
 const [nodePath, scriptPath, password, encryptedIv] = process.argv;
 console.log(decrypt(encryptedIv, password));
