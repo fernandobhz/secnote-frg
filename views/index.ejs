@@ -13,10 +13,17 @@
       async function encrypt() {
         const decrypted = window.decrypted.value;
         const password = window.password.value;
+        const passhash = window.passhash.value;
 
-        const { data: encrypted } = await axios.post(`/api/encrypt`, { decrypted, password });
+        if (!passhash) {
+          return alert('Please define your passhash to make sure you typed the password correctly');
+        }
+
+        const { data: encrypted } = await axios.post(`/api/encrypt`, { decrypted, password, passhash });
         window.encrypted.innerHTML = encrypted;
         window.decrypted.innerHTML = "";
+
+        localStorage.setItem('passhash', passhash);
       }
 
       async function decrypt() {
@@ -35,6 +42,12 @@
 
     <div>
       Password: <input type="password" id="password" value="12345678" />
+    </div>
+    <div>
+      Passhash: <input type="text" id="passhash" placeholder="A sha256 hash of you password" />
+      <script>
+        window.passhash.value = localStorage.getItem('passhash');
+      </script>
     </div>
     
     <br>
