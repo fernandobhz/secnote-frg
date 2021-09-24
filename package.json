@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon -e js,html,css,ejs ./bin/www",
-    "deploy:4": "git push heroku feat/4-data-encryption-2:master"
+    "deploy:frg": "git push heroku frg:master"
   },
   "repository": {
     "type": "git",
