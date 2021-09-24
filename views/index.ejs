@@ -20,8 +20,8 @@
         }
 
         const { data: encrypted } = await axios.post(`/api/encrypt`, { decrypted, password, passhash });
-        window.encrypted.innerHTML = encrypted;
-        window.decrypted.innerHTML = "";
+        window.encrypted.value = encrypted;
+        window.decrypted.value = "";
 
         localStorage.setItem('passhash', passhash);
       }
@@ -31,8 +31,8 @@
         const password = window.password.value;
 
         const { data: decrypted } = await axios.post(`/api/decrypt`, { encrypted, password });
-        window.decrypted.innerHTML = decrypted;
-        window.encrypted.innerHTML = "";
+        window.decrypted.value = decrypted;
+        window.encrypted.value = "";
       }
     </script>
   </head>
