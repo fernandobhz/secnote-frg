@@ -1,4 +1,4 @@
-# Description
+# Description!
 
 Target audience: developers and tech savvy people looking for a secure, transparent, and easy to use platform to keep their notes, passwords, and any form of text secure and non-dependent on an internet connection at any given time.
 
