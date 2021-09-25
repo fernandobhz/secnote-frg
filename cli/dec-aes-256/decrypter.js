@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { scryptSync, createDecipheriv } = require("crypto");
 const { Buffer } = require("buffer");
 
