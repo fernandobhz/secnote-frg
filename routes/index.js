@@ -1,5 +1,5 @@
 const express = require("express");
-const sha256 = require('js-sha256');
+const sha256 = require("js-sha256");
 
 const router = express.Router();
 const { encrypt, decrypt } = require("../services/data-encryption");
@@ -18,13 +18,14 @@ router.post("/encrypt-data", (req, res) => {
 
 router.post(`/api/encrypt`, (req, res) => {
   const { decrypted, password, passhash } = req.body;
+  const confirmhash = sha256(password);
 
-  if (passhash.toLowerCase() !== sha256(password).toLowerCase()) {
+  if (passhash && passhash.toLowerCase() !== confirmhash.toLowerCase()) {
     return res.json(`Your passhash doesn't match your real password sha256 hash`);
   }
 
   const encrypted = encrypt(decrypted, password);
-  res.json(encrypted);
+  res.json({ encrypted, confirmhash });
 });
 
 router.get("/decrypt-data", (req, res) => res.render("decrypt-data-get"));
@@ -38,7 +39,7 @@ router.post("/decrypt-data", (req, res) => {
 router.post(`/api/decrypt`, (req, res) => {
   const { encrypted, password } = req.body;
   const decrypted = decrypt(encrypted, password);
-  res.json(decrypted);
-})
+  res.json({ decrypted });
+});
 
 module.exports = router;

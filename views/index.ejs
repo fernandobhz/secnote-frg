@@ -15,13 +15,14 @@
         const password = window.password.value;
         const passhash = window.passhash.value;
 
-        if (!passhash) {
-          return alert('Please define your passhash to make sure you typed the password correctly');
-        }
-
-        const { data: encrypted } = await axios.post(`/api/encrypt`, { decrypted, password, passhash });
+        const { data: { encrypted, confirmhash } } = await axios.post(`/api/encrypt`, { decrypted, password, passhash });
         window.encrypted.value = encrypted;
         window.decrypted.value = "";
+
+        if (!passhash) {
+          window.passhash.value = confirmhash;
+          return localStorage.setItem('passhash', confirmhash);
+        }
 
         localStorage.setItem('passhash', passhash);
       }
@@ -30,7 +31,7 @@
         const encrypted = window.encrypted.value;
         const password = window.password.value;
 
-        const { data: decrypted } = await axios.post(`/api/decrypt`, { encrypted, password });
+        const { data: { decrypted } } = await axios.post(`/api/decrypt`, { encrypted, password });
         window.decrypted.value = decrypted;
         window.encrypted.value = "";
       }
@@ -41,10 +42,10 @@
     <p>Welcome to <%= title %></p>
 
     <div>
-      Password: <input type="password" id="password" />
+      Password: <input type="password" id="password" style="width: 500px" />
     </div>
     <div>
-      Passhash: <input type="text" id="passhash" placeholder="A sha256 hash of you password" />
+      Passhash: <input type="text" id="passhash" placeholder="A sha256 hash of you password" style="width: 500px" />
       <script>
         window.passhash.value = localStorage.getItem('passhash');
       </script>
