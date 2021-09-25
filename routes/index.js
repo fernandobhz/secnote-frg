@@ -21,7 +21,8 @@ router.post(`/api/encrypt`, (req, res) => {
   const confirmhash = sha256(password);
 
   if (passhash && passhash.toLowerCase() !== confirmhash.toLowerCase()) {
-    return res.json(`Your passhash doesn't match your real password sha256 hash`);
+    const error = `Your passhash doesn't match your real password sha256 hash`;
+    return res.json({ error });
   }
 
   const encrypted = encrypt(decrypted, password);

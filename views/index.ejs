@@ -15,7 +15,12 @@
         const password = window.password.value;
         const passhash = window.passhash.value;
 
-        const { data: { encrypted, confirmhash } } = await axios.post(`/api/encrypt`, { decrypted, password, passhash });
+        const { data: { encrypted, confirmhash, error } } = await axios.post(`/api/encrypt`, { decrypted, password, passhash });
+
+        if (error) {
+          return window.encrypted.value = error;  
+        }
+
         window.encrypted.value = encrypted;
         window.decrypted.value = "";
 
